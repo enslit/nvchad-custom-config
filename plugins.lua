@@ -1,4 +1,4 @@
-local overrides = require("custom.configs.overrides")
+local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -25,7 +25,7 @@ local plugins = {
   -- override plugin configs
   {
     "williamboman/mason.nvim",
-    opts = overrides.mason
+    opts = overrides.mason,
   },
 
   {
@@ -47,33 +47,29 @@ local plugins = {
     end,
   },
   {
-		"akinsho/toggleterm.nvim",
-		version = "*",
-		config = true,
-		lazy = false,
-		init = function()
-			local Terminal = require("toggleterm.terminal").Terminal
-			local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
-			local lazydocker = Terminal:new({ cmd = "lazydocker", hidden = true, direction = "float" })
+    "akinsho/toggleterm.nvim",
 
-			function _lazygit_toggle()
-				lazygit:toggle()
-			end
+    version = "*",
+    config = true,
+    lazy = false,
+    init = function()
+      local Terminal = require("toggleterm.terminal").Terminal
+      local lazygit = Terminal:new { cmd = "lazygit", hidden = true, direction = "float" }
+      local lazydocker = Terminal:new { cmd = "lazydocker", hidden = true, direction = "float" }
 
-			function _lazydocker_toggle()
-				lazydocker:toggle()
-			end
+      function _lazygit_toggle()
+        lazygit:toggle()
+      end
 
-			vim.api.nvim_set_keymap("n", "<A-g>", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })
-			vim.api.nvim_set_keymap(
-				"n",
-				"<leader>ld",
-				"<cmd>lua _lazydocker_toggle()<CR>",
-				{ noremap = true, silent = true }
-			)
-		end,
-	},
-	{ "christoomey/vim-tmux-navigator", lazy = false },
+      function _lazydocker_toggle()
+        lazydocker:toggle()
+      end
+
+      vim.api.nvim_set_keymap("n", "<A-g>", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap("n", "<leader>ld", "<cmd>lua _lazydocker_toggle()<CR>", { noremap = true, silent = true })
+    end,
+  },
+  { "christoomey/vim-tmux-navigator", lazy = false },
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
